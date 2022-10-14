@@ -40,6 +40,9 @@ class MainActivity : AppCompatActivity(), SensorEventListener{
     private val colors = arrayOf(Color.BLUE,Color.RED,Color.GREEN,Color.CYAN)
     private var sensors: Array<Float> = arrayOf(0f,0f,0f,0f)
 
+//    private lateinit var accSensor: Sensor;
+//    private lateinit var pressureSensor: Sensor;
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -70,6 +73,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener{
             sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE), // barometric pressure
             SensorManager.SENSOR_DELAY_NORMAL)
 
+
         //initialize chart
         var linedatasets = mutableListOf<ILineDataSet>()
         for (i in 0..3){
@@ -94,15 +98,15 @@ class MainActivity : AppCompatActivity(), SensorEventListener{
             if (event.sensor.type == Sensor.TYPE_ACCELEROMETER){ // 圧力センサの処理
                 // get sensor values
                 for (i in 0..2){sensors[i] = event.values[i]}
-            }else if(event.sensor.type == Sensor.TYPE_PRESSURE){ // 気圧センサの処理
-                sensors[3] == event.values[0]
+            }else if(event.sensor.type == Sensor.TYPE_PRESSURE){ // 気圧センサの処理 => なぜか表示されない
+                sensors[3] = event.values[0]
             }
 
             // show value string
             var str : String = "センサの値\n"
             for (i in 0..3){str+="${labels[i]}: ${sensors[i]}\n"}
             textView.setText(str)
-
+            
             // figure out
             var data: LineData = mChart.data
 //            textView.append("${data.dataSetCount}")
