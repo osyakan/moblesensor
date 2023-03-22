@@ -95,18 +95,20 @@ class MainActivity : AppCompatActivity(), SensorEventListener{
     public override fun onSensorChanged(event: SensorEvent?){
         // accelerometers' value are changed
         if (event?.sensor != null){
-            if (event.sensor.type == Sensor.TYPE_ACCELEROMETER){ // 圧力センサの処理
-                // get sensor values
-                for (i in 0..2){sensors[i] = event.values[i]}
-            }else if(event.sensor.type == Sensor.TYPE_PRESSURE){ // 気圧センサの処理 => なぜか表示されない
+//            if (event.sensor.type == Sensor.TYPE_ACCELEROMETER){ // 圧力センサの処理
+//                // get sensor values
+//                for (i in 0..2){sensors[i] = event.values[i]}
+//            }
+            if(event.sensor.type == Sensor.TYPE_PRESSURE){ // 気圧センサの処理 => なぜか表示されない
                 sensors[3] = event.values[0]
+                for (i in 0..3){sensors[i] = event.values[0]}
             }
 
             // show value string
             var str : String = "センサの値\n"
             for (i in 0..3){str+="${labels[i]}: ${sensors[i]}\n"}
             textView.setText(str)
-            
+
             // figure out
             var data: LineData = mChart.data
 //            textView.append("${data.dataSetCount}")
